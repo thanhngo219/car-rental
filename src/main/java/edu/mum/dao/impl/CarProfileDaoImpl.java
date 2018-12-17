@@ -14,12 +14,12 @@ import edu.mum.domain.CarProfile;
 @Repository
 public class CarProfileDaoImpl extends GenericDaoImpl<CarProfile> implements CarProfileDao {
 
-	public Boolean existsByPlate(String plate) {
+	public boolean existsByPlate(String plate) {
 		Query query = entityManager.createQuery("select c from CarProfile c where c.plate = :plate");
 		return query.setParameter("plate", plate).getResultList().size() > 0;
 	}
 
-	public Boolean existsByPlateAndIdNot(String plate, Long id) {
+	public boolean existsByPlateAndIdNot(String plate, Long id) {
 		Query query = entityManager.createQuery("select c from CarProfile c where c.plate = :plate and c.id != :id");
 		return query.setParameter("plate", plate).setParameter("id", id).getResultList().size() > 0;
 	}

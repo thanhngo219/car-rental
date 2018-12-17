@@ -8,5 +8,5 @@ import edu.mum.domain.User;
 public interface UserDao extends GenericDao<User> {
 	public User findByUsername(String username);
 
-	public Boolean existsByUsername(String username);
+	public boolean existsByUsername(String username);
 }

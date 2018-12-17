@@ -14,7 +14,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 		return (User) query.setParameter("username", username).getSingleResult();
 	}
 
-	public Boolean existsByUsername(String username) {
+	public boolean existsByUsername(String username) {
 		Query query = entityManager.createQuery("select u from User u where u.username = :username");
 		return query.setParameter("username", username).getResultList().size() > 0;
 	}
