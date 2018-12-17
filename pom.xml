@@ -29,6 +29,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<version>1.0</version>
 		<tiles.jsp.version>3.0.8</tiles.jsp.version>
+		<jackson.datatype.hibernate5>2.9.6</jackson.datatype.hibernate5>
 	</properties>
 
 
@@ -147,6 +148,12 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson.binding.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-hibernate5</artifactId>
+			<version>${jackson.datatype.hibernate5}</version>
 		</dependency>
 
 		<dependency>
