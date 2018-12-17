@@ -1,13 +1,19 @@
 package edu.mum.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -20,30 +26,31 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "carownerprofile")
-public class CarOwnerProfile {
+@Table(name = "car_owner_profile")
+public class CarOwnerProfile implements Serializable {
+
+	private static final long serialVersionUID = -6221909800574802434L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
 
-	@NotEmpty(message = "*First Name is required")
+	@NotEmpty(message = "{not.empty}")
 	@Column(name = "firstName")
 	private String firstName;
 
-	@NotEmpty(message = "*Last Name is required")
+	@NotEmpty(message = "{not.empty}")
 	@Column(name = "lastName")
 	private String lastName;
 
-	@NotNull
+	@NotNull(message = "{not.null}")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "MM/dd/yyyy")
+	@DateTimeFormat(pattern = "MM-dd-yyyy")
 	private Date dob;
 
-	@NotEmpty(message = "*Email Address is required")
 	@Column(name = "email")
-	@Email(regexp = "")
+	@Email(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "{email.format.validation}")
 	private String emailAddress;
 
 	@Column(name = "phone")
@@ -52,15 +59,19 @@ public class CarOwnerProfile {
 	@Column(name = "address")
 	private String address;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "bank_account_id")
 	private BankAccount bankAccount;
 
-	@OneToMany(mappedBy = "carOwnerProfile")
+	@OneToMany(mappedBy = "carOwnerProfile", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CarProfile> carProfiles;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "profile_status")
 	private ProfileStatus status;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	public Long getId() {

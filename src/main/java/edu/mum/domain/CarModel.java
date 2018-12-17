@@ -1,5 +1,6 @@
 package edu.mum.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +16,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
-@Table(name = "carmodel")
-public class CarModel {
+@Table(name = "car_model")
+public class CarModel implements Serializable {
+
+	private static final long serialVersionUID = 5257253621181133715L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,23 +30,15 @@ public class CarModel {
 	private Long id;
 
 	@Column(name = "name")
+	@NotBlank(message = "{not.blank}")
 	private String name;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "brand_id")
 	private CarBrand brand;
 
-	@OneToMany(mappedBy = "model", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "model", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CarProfile> carProfiles = new ArrayList<>();
-
-	public CarModel() {
-	}
-
-	public CarModel(String name, CarBrand brand, List<CarProfile> carProfiles) {
-		this.name = name;
-		this.brand = brand;
-		this.carProfiles = carProfiles;
-	}
 
 	public Long getId() {
 		return id;

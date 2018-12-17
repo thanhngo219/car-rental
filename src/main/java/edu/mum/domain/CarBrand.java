@@ -1,21 +1,25 @@
 package edu.mum.domain;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "carbrand")
-public class CarBrand {
+@Table(name = "car_brand")
+public class CarBrand implements Serializable {
+
+	private static final long serialVersionUID = -3483445271245596589L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,21 +27,14 @@ public class CarBrand {
 	private Long id;
 
 	@Column(name = "name")
+	@NotBlank(message = "{not.blank}")
 	private String name;
 
-	@Column(name = "logoUrl")
+	@Column(name = "logo_url")
 	private String logoUrl;
 
-	@OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CarModel> models = new ArrayList<>();
-
-	public CarBrand() {
-	}
-
-	public CarBrand(String name, String logoUrl) {
-		this.name = name;
-		this.logoUrl = logoUrl;
-	}
 
 	public Long getId() {
 		return id;

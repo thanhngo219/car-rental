@@ -1,5 +1,7 @@
 package edu.mum.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,24 +10,35 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import edu.mum.validation.EmptyOrSize;
+
 @Entity
-@Table(name = "creditcardinfo")
-public class CreditCardInfo {
+@Table(name = "credit_card_info")
+public class CreditCardInfo implements Serializable {
+
+	private static final long serialVersionUID = -3384856498553402625L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
 
 	@Column(name = "creditCardNum")
+	@EmptyOrSize(min = 16, max = 16, message = "{credit.card.validation}")
 	private String creditCardNum;
 
 	@Column(name = "fullName")
+	@NotBlank(message = "{not.blank}")
 	private String fullName;
 
 	@Column(name = "csv")
+	@NotBlank(message = "{not.blank}")
 	private String csv;
 
 	@Column(name = "expiredDate")
+	@NotBlank(message = "{not.blank}")
 	private String expDate;
 
 	@OneToOne

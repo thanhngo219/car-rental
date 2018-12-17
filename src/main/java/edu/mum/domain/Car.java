@@ -1,5 +1,7 @@
 package edu.mum.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,9 +11,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "car")
-public class Car {
+public class Car implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = -5485043766947011093L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
@@ -27,16 +31,6 @@ public class Car {
     
     @Column(name = "year")
     private Integer year;
-
-    public Car() {
-    }
-
-    public Car(String model, String brand, String color, Integer year) {
-        this.model = model;
-        this.brand = brand;
-        this.color = color;
-        this.year = year;
-    }
 
     public Long getId() {
         return id;

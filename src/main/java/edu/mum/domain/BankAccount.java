@@ -1,7 +1,9 @@
 package edu.mum.domain;
 
 
+import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,9 +13,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
-@Table(name = "bankaccount")
-public class BankAccount {
+@Table(name = "bank_account")
+public class BankAccount implements Serializable {
+
+	private static final long serialVersionUID = -6143479125286634502L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,22 +31,11 @@ public class BankAccount {
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "expiredDate")
+	@DateTimeFormat(pattern = "MM-dd-yyyy")
 	private Date expiredDate;
 
 	@Column(name = "securityCode")
 	private String securityCode;
-
-	public BankAccount() {
-		super();
-	}
-
-	public BankAccount(Long id, String cardNumber, Date expiredDate, String securityCode) {
-		super();
-		this.id = id;
-		this.cardNumber = cardNumber;
-		this.expiredDate = expiredDate;
-		this.securityCode = securityCode;
-	}
 
 	public Long getId() {
 		return id;

@@ -1,5 +1,6 @@
 package edu.mum.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -16,7 +17,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "rental")
-public class Rental {
+public class Rental implements Serializable {
+
+	private static final long serialVersionUID = -5008033981132760699L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +36,7 @@ public class Rental {
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "offer_id")
 	private Offer offer;
 

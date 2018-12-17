@@ -1,30 +1,37 @@
 package edu.mum.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "carprofile")
-public class CarProfile {
+@Table(name = "car_profile")
+public class CarProfile implements Serializable {
+
+	private static final long serialVersionUID = 1075742146089053675L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "car_model_id")
 	private CarModel model;
 	
 	@Enumerated(EnumType.STRING)
@@ -38,20 +45,18 @@ public class CarProfile {
 	@Column(name = "status")
 	private AnalysisStatus status = AnalysisStatus.PENDING;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "car_owner_profile_id")
 	private CarOwnerProfile carOwnerProfile;
 	
 	@Column(name = "plate")
 	private String plate;
 	
-	@OneToMany(mappedBy = "carProfile")
+	@OneToMany(mappedBy = "carProfile", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Offer> offers = new ArrayList<>();
 
 	@Transient
 	private CarBrand carBrandSelected;
-
-	public CarProfile() {
-	}
 
 	public Long getId() {
 		return id;

@@ -1,16 +1,24 @@
 package edu.mum.domain;
 
+import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import edu.mum.validation.EmptyOrSize;
+
 @Entity
 @Table(name = "user_tb")
-public class User {
+public class User implements Serializable {
+
+	private static final long serialVersionUID = -6009119170548412103L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,33 +26,18 @@ public class User {
 	private Long id;
 
 	@Column(name = "username")
+	@EmptyOrSize(min = 5, max = 16, message = "{size.string.validation}")
 	private String username;
 
 	@Column(name = "password")
+	@EmptyOrSize(min = 5, max = 16, message = "{size.string.validation}")
 	private String password;
 
 	@Column(name = "is_admin")
 	private Boolean admin = false;
 
-	@OneToOne(mappedBy = "user")
+	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private CarOwnerProfile carOwnerProfile;
-
-	public User() {
-	}
-
-	public User(String username, String password, Boolean admin, CarOwnerProfile carOwnerProfile) {
-		this.username = username;
-		this.password = password;
-		this.admin = admin;
-		this.carOwnerProfile = carOwnerProfile;
-	}
-
-	public User(User user) {
-		this.username = user.getUsername();
-		this.password = user.getPassword();
-		this.admin = user.getAdmin();
-		this.carOwnerProfile = user.getCarOwnerProfile();
-	}
 
 	public Long getId() {
 		return id;
