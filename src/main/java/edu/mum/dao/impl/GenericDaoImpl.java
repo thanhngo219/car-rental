@@ -56,4 +56,10 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 		return (List<T>) entityManager.createQuery("from " + daoType.getName()).setHint(s, hint).getResultList();
 	}
 
+	@Override
+	public List<T> findAll(String orderingProperty) {
+		return (List<T>) entityManager
+				.createQuery("select o from " + daoType.getName() + " o order by " + orderingProperty).getResultList();
+	}
+
 }

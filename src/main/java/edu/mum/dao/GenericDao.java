@@ -23,4 +23,6 @@ public interface GenericDao<T> {
 
 	public List<T> findAll(String s, Object hint);
 
+	public List<T> findAll(String orderingProperty);
+
 }
