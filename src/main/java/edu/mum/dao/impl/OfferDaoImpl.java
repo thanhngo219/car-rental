@@ -15,6 +15,9 @@ import edu.mum.domain.Offer;
 
 @Repository
 public class OfferDaoImpl extends GenericDaoImpl<Offer> implements OfferDao {
+	public OfferDaoImpl() {
+		super.setDaoType(Offer.class);
+	}
 
 	public List<Offer> findByCarProfileOrderByIdAsc(CarProfile carProfile) {
 		Query query = entityManager.createQuery("select o from Offer o where o.carProfile=:carProfile order by o.id");
@@ -68,5 +71,4 @@ public class OfferDaoImpl extends GenericDaoImpl<Offer> implements OfferDao {
 		return query.setParameter("publicationStatus", publicationStatus).setParameter("year", year)
 				.setParameter("carBrand", carBrand).setParameter("analysisStatus", analysisStatus).getResultList();
 	}
-
 }

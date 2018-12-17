@@ -7,4 +7,7 @@ import edu.mum.domain.Rental;
 
 @Repository
 public class RentalDaoImpl extends GenericDaoImpl<Rental> implements RentalDao {
+	public RentalDaoImpl() {
+		super.setDaoType(Rental.class);
+	}
 }

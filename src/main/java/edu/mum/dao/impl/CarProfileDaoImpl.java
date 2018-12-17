@@ -13,6 +13,9 @@ import edu.mum.domain.CarProfile;
 
 @Repository
 public class CarProfileDaoImpl extends GenericDaoImpl<CarProfile> implements CarProfileDao {
+	public CarProfileDaoImpl() {
+		super.setDaoType(CarProfile.class);
+	}
 
 	public boolean existsByPlate(String plate) {
 		Query query = entityManager.createQuery("select c from CarProfile c where c.plate = :plate");

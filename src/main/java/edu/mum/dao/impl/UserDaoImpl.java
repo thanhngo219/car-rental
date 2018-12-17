@@ -9,6 +9,10 @@ import edu.mum.domain.User;
 
 @Repository
 public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
+	public UserDaoImpl() {
+		super.setDaoType(User.class);
+	}
+
 	public User findByUsername(String username) {
 		Query query = entityManager.createQuery("select u from User u where u.username = :username");
 		return (User) query.setParameter("username", username).getSingleResult();
@@ -18,5 +22,4 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 		Query query = entityManager.createQuery("select u from User u where u.username = :username");
 		return query.setParameter("username", username).getResultList().size() > 0;
 	}
-
 }

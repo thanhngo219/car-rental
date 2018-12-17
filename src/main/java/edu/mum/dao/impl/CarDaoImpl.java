@@ -7,4 +7,7 @@ import edu.mum.domain.Car;
 
 @Repository
 public class CarDaoImpl extends GenericDaoImpl<Car> implements CarDao {
+	public CarDaoImpl() {
+		super.setDaoType(Car.class);
+	}
 }
