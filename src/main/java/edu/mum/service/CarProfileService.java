@@ -12,6 +12,6 @@ public interface CarProfileService extends GenericService<CarProfile> {
 
 	List<CarProfile> findByStatus(AnalysisStatus analysisStatus);
 
-	Boolean verifyIfPlateIsAlreadyRegistered(String plate, Long id);
+	boolean verifyIfPlateIsAlreadyRegistered(String plate, Long id);
 
 }
