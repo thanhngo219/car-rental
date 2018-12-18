@@ -1,6 +1,8 @@
 package edu.mum.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -38,6 +43,12 @@ public class User implements Serializable {
 
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private CarOwnerProfile carOwnerProfile;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "user_authority",
+		joinColumns = { @JoinColumn(name = "user_id") },
+		inverseJoinColumns = { @JoinColumn(name = "authority_id", unique = true) })
+	List<Authority> authority = new ArrayList<Authority>();
 
 	public Long getId() {
 		return id;
@@ -77,5 +88,13 @@ public class User implements Serializable {
 
 	public void setCarOwnerProfile(CarOwnerProfile carOwnerProfile) {
 		this.carOwnerProfile = carOwnerProfile;
+	}
+
+	public List<Authority> getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(List<Authority> authority) {
+		this.authority = authority;
 	}
 }

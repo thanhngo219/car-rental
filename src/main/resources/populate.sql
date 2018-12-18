@@ -26,6 +26,18 @@ INSERT INTO user_tb (id, is_admin, password, username) VALUES (2, false, '123', 
 INSERT INTO user_tb (id, is_admin, password, username) VALUES (3, false, '123', 'thuy');
 INSERT INTO user_tb (id, is_admin, password, username) VALUES (4, false, '123', 'thanh');
 
+INSERT INTO authority (id, username, authority) VALUES (1, 'admin', 'ROLE_ADMIN');
+INSERT INTO authority (id, username, authority) VALUES (2, 'admin', 'ROLE_USER');
+INSERT INTO authority (id, username, authority) VALUES (3, 'tam', 'ROLE_USER');
+INSERT INTO authority (id, username, authority) VALUES (4, 'thuy', 'ROLE_USER');
+INSERT INTO authority (id, username, authority) VALUES (5, 'thanh', 'ROLE_USER');
+
+INSERT INTO user_authority (user_id, authority_id) VALUES (1, 1);
+INSERT INTO user_authority (user_id, authority_id) VALUES (1, 2);
+INSERT INTO user_authority (user_id, authority_id) VALUES (2, 3);
+INSERT INTO user_authority (user_id, authority_id) VALUES (3, 4);
+INSERT INTO user_authority (user_id, authority_id) VALUES (4, 5);
+
 INSERT INTO bank_account (id, cardNumber, expiredDate, securityCode) VALUES (1, '1111-1111-1111-1111', '20200101', '111');
 INSERT INTO bank_account (id, cardNumber, expiredDate, securityCode) VALUES (2, '2222-2222-2222-2222', '20200202', '222');
 INSERT INTO bank_account (id, cardNumber, expiredDate, securityCode) VALUES (3, '3333-3333-3333-3333', '20200303', '333');
